@@ -5,8 +5,8 @@
 # Every unfilled field is `null` plus a TODO comment with a concrete example.
 
 project:
-  project_name: jpl-bunkai-qa-engineering
-  project_key: BK
+  project_name: qa-portfolio
+  project_key: PORT
   webapp_domain: myproject.com # Domain of the web application under test (e.g. myproject.com)
 
 backend:
@@ -25,7 +25,7 @@ database:
 issue_tracker:
   issue_tracker: Jira # Issue tracking tool (e.g. Jira)
   issue_tracker_cli: acli # CLI command to query tickets (e.g. acli (Jira) / gh issue (GitHub))
-  atlassian_url: 'https://upexgalaxy69.atlassian.net/' # Atlassian site base URL (e.g. https://company.atlassian.net) — same value as .env's ATLASSIAN_URL
+  atlassian_url: 'https://lk-tudeclaracion.atlassian.net/' # Atlassian site base URL (e.g. https://company.atlassian.net) — same value as .env's ATLASSIAN_URL
 
 testing:
   default_env: local # Default testing environment — must match a key under `environments:` (e.g. staging)
@@ -100,7 +100,7 @@ environments:
     db_mcp: myproject-local-db # MCP server name for local DB (e.g. myproject-local-db)
     api_mcp: myproject-local-api # MCP server name for local API (e.g. myproject-local-api)
   staging:
-    web_url: 'https://staging.myproject.com' # Frontend URL for staging env (e.g. https://staging.myproject.com)
-    api_url: 'https://api-staging.myproject.com' # API base URL for staging env (e.g. https://api-staging.myproject.com)
+    web_url: 'https://staging-upexbunkai.vercel.app' # Frontend URL for staging env (e.g. https://staging.myproject.com)
+    api_url: 'https://staging-upexbunkai.vercel.app/api' # API base URL for staging env (e.g. https://api-staging.myproject.com)
     db_mcp: myproject-staging-db # MCP server name for staging DB (e.g. myproject-staging-db)
     api_mcp: myproject-staging-api # MCP server name for staging API (e.g. myproject-staging-api)

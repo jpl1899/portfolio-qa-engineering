@@ -72,8 +72,8 @@
 | Tool | Value | Source |
 |------|-------|--------|
 | Issue tracker | Jira | `.agents/project.yaml` |
-| Atlassian URL | `https://upexgalaxy69.atlassian.net/` | `.agents/project.yaml` |
-| Project key | BK | `.agents/project.yaml` |
+| Atlassian URL | `https://lk-tudeclaracion.atlassian.net/` | `.agents/project.yaml` |
+| Project key | PORT | `.agents/project.yaml` |
 | DB MCP | DBHub (`dbhub.toml`) + Supabase MCP | `dbhub.toml` + `.env.example` |
 | API explorer | `/api/docs` (Scalar UI) + `/api/openapi` (JSON spec) | `app/api/docs/page.tsx`, `app/api/openapi/route.ts` |
 | Docs | DESIGN.md, CONTEXT.md, `.context/designs/` | In-repo |
