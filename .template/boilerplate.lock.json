@@ -3,22 +3,59 @@
   "templateRepo": "upex-galaxy/agentic-qa-boilerplate",
   "templateCommit": "8b136080f98ec505229ebf41311d7428db56e01d",
   "perComponentCommit": {
-    "skills": "8b136080f98ec505229ebf41311d7428db56e01d",
-    "commands": "8b136080f98ec505229ebf41311d7428db56e01d",
-    "scripts": "8b136080f98ec505229ebf41311d7428db56e01d",
-    "docs": "8b136080f98ec505229ebf41311d7428db56e01d",
+    "skills": "78597763963061453470eebd872be393157f2adc",
+    "commands": "78597763963061453470eebd872be393157f2adc",
+    "scripts": "78597763963061453470eebd872be393157f2adc",
+    "docs": "78597763963061453470eebd872be393157f2adc",
     "cli": "8b136080f98ec505229ebf41311d7428db56e01d",
     "vscode": "8b136080f98ec505229ebf41311d7428db56e01d",
-    "husky": "8b136080f98ec505229ebf41311d7428db56e01d",
-    "agents-docs": "8b136080f98ec505229ebf41311d7428db56e01d",
+    "husky": "78597763963061453470eebd872be393157f2adc",
+    "agents-docs": "78597763963061453470eebd872be393157f2adc",
     "claude-config": "8b136080f98ec505229ebf41311d7428db56e01d",
     "tooling": "8b136080f98ec505229ebf41311d7428db56e01d",
-    "env-template": "8b136080f98ec505229ebf41311d7428db56e01d"
+    "env-template": "78597763963061453470eebd872be393157f2adc"
   },
   "syncedComponents": [],
-  "ignoreFileSync": {},
-  "packageJsonSync": {},
+  "ignoreFileSync": {
+    ".gitignore": {
+      "lastSyncedSha": "36a1a683d89bb8c2c9376a25ec204cbbdfd4c5a4",
+      "appendedLines": [
+        "/.allure/",
+        "/.agents/prompts/",
+        ".template/claude-md.upstream.sha",
+        ".template/upstream-sha/"
+      ]
+    },
+    ".prettierignore": {
+      "lastSyncedSha": "642f57f0d23c79095d66c0edd02994c983ec7ca9",
+      "appendedLines": [
+        "packages/decks/"
+      ]
+    }
+  },
+  "packageJsonSync": {
+    "package.json": {
+      "scripts": {
+        "lastSyncedSha": "a5f848544f56080ceff9a25cade06ccd4b05a35d",
+        "appliedKeys": []
+      },
+      "devDependencies": {
+        "lastSyncedSha": "a5f848544f56080ceff9a25cade06ccd4b05a35d",
+        "appliedKeys": [
+          "allure-js-commons"
+        ]
+      },
+      "dependencies": {
+        "lastSyncedSha": "a5f848544f56080ceff9a25cade06ccd4b05a35d",
+        "appliedKeys": []
+      },
+      "lint-staged": {
+        "lastSyncedSha": "a5f848544f56080ceff9a25cade06ccd4b05a35d",
+        "appliedKeys": []
+      }
+    }
+  },
   "cliVersion": "7.0",
-  "lastSyncedAt": "2026-06-19T14:42:27.994Z",
+  "lastSyncedAt": "2026-08-06T14:22:23.427Z",
   "variableSystemVersion": 1
 }
