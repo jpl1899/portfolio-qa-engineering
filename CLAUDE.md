@@ -390,7 +390,9 @@ Test files (orchestrate ATCs)
 
 Git / PR work → `/git-flow-master` auto-loads. Details in `.claude/skills/git-flow-master/` + `docs/workflows/git-flow.md`.
 
-**Protected branches** (`/git-flow-master` detects + adapts to whatever branches actually exist on the remote):
+**Active strategy + branch policy = the `git_strategy:` block in `.agents/project.yaml`** (source of truth; see `## Git Strategy` below). This repo operates as `sdet`.
+
+**Protected branches** (`/git-flow-master` reads `git_strategy.protected` in `.agents/project.yaml`; falls back to detecting whatever branches exist on the remote):
 
 | Branch | Status | Role |
 |---|---|---|
@@ -409,13 +411,11 @@ Git / PR work → `/git-flow-master` auto-loads. Details in `.claude/skills/git-
 
 ## Git Strategy
 
-<!-- No strategy resolved yet. This boilerplate ships WITHOUT a git-flow-master:strategy marker by design (template-trap guard). -->
+> **Source of truth: the `git_strategy:` block in `.agents/project.yaml`.** `git-flow-master` reads it before any git/gh operation and adapts every branch / commit / push / PR / conflict-fix to the strategy declared there. NEVER define branch policy in this CLAUDE.md — edit the `git_strategy:` block.
+>
+> If `git_strategy.strategy` is **null** (the shipped template value), the strategy is UNSET: `git-flow-master` OFFERS "Strategy Setup" on the first git intent and fills the block (it never auto-picks). Downstream test-automation projects typically choose `sdet` (chained suites; see `.claude/skills/git-flow-master/references/sdet-integration-trunk.md`).
 
-This project has not run Strategy Setup yet. The branching strategy (solo-main / main-integration / enterprise / trunk-based / gitflow / github-flow / gitlab-flow / sdet) is undecided.
-
-For a test-automation repo running chained suites, the recommended strategy is **`sdet`** (SDET Gitflow — an ephemeral per-suite integration trunk; tickets chain through it with `--no-ff` merges and one final reviewed PR to `main`). See `.claude/skills/git-flow-master/references/sdet-integration-trunk.md`.
-
-To configure: ask git-flow-master to "set up our git strategy" (or "bootstrap branching"). Strategy Setup will pick the flow, create only the branches that flow needs (never forcing anything), capture the merge + hotfix decisions, and replace this placeholder with the full runbook + markers. Until then, git-flow-master detects the strategy per-invocation and operates without a persisted runbook.
+This project runs `git_strategy.strategy: sdet`. `main` holds confirmed, regression-ready tests. Each test suite runs on an ephemeral integration trunk `test/<module>-suite` (created off `main`, deleted after the suite merges). Tickets chain through the trunk with `--no-ff` merges; one final reviewed PR promotes the suite to `main`. Full runbook: `.claude/skills/git-flow-master/references/sdet-integration-trunk.md`.
 
 ---
 

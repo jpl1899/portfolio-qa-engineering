@@ -34,6 +34,38 @@ testing:
 qa:
   formal_blocked_gate: true # When true and the substrate exposes a `blocked` story status, FAILED stories dispatch `defect_reported` (in_test -> blocked). When false (or no `blocked` slug), the skill leaves the story in `in_test` with the linked bug — non-strict fallback. See sprint-testing/references/sprint-orchestration.md Briefing 4 Step 5.
 
+# Git workflow for THIS project — the SOURCE OF TRUTH read by the git-flow-master skill
+# before any git/gh operation. CLAUDE.md's "## Git Strategy" section is just a pointer here.
+git_strategy:
+  strategy: sdet
+  description: >
+    This project uses the `sdet` (SDET Gitflow) flow. `main` holds confirmed,
+    regression-ready tests. Each test suite runs on an ephemeral integration trunk
+    `test/<module>-suite` (created off `main`, deleted after the suite merges).
+    Tickets chain through the trunk; one final reviewed PR promotes the suite to
+    `main`. Full runbook: .claude/skills/git-flow-master/references/sdet-integration-trunk.md
+  branches:
+    production: main
+    integration: null # the trunk is ephemeral, not a fixed long-lived branch
+    ephemeral_pattern: 'test/<module>-suite'
+  protected:
+    - main
+  decisions:
+    promote_method: n/a # no production deploy
+    feature_merge: merge-commit # FIXED — ticket/Plus -> trunk is always --no-ff, never squash
+    hotfix_policy: n/a
+  policy:
+    direct_push_to_protected: confirm # Q4 — maintainer self-merges the trunk; main confirms
+    admin_bypass: false
+    require_pr_reviews: 0 # 0 on the trunk (self-merge); 1 on the final trunk -> main PR
+  branch_prefixes:
+    precedence: [feat, fix, refactor, test, docs, chore]
+    naming_with_key: '{prefix}/{ISSUE-KEY}-{kebab-slug}'
+    naming_without_key: '{prefix}/{kebab-slug}'
+  meta:
+    setup_version: 1
+    created: 2026-08-06 # YYYY-MM-DD stamped by Strategy Setup
+
 # Per-environment config. Add/remove environments freely (production, dev, qa, uat, etc.).
 # Each environment must define ALL four keys: web_url, api_url, db_mcp, api_mcp.
 # Skills referencing {{WEB_URL}} / {{API_URL}} / {{DB_MCP}} / {{API_MCP}} resolve to the
