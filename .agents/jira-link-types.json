@@ -1,10 +1,10 @@
 {
   "blocking": {
-    "id": "10008",
-    "name": "Blocking",
+    "id": "",
+    "name": "",
     "outward": "blocks",
     "inward": "is blocked by",
-    "exists_in_workspace": true
+    "exists_in_workspace": false
   },
   "blocks": {
     "id": "10000",
@@ -21,17 +21,10 @@
     "exists_in_workspace": true
   },
   "defect": {
-    "id": "10007",
+    "id": "10039",
     "name": "Defect",
     "outward": "created",
     "inward": "created by",
-    "exists_in_workspace": true
-  },
-  "dependencies": {
-    "id": "10014",
-    "name": "Dependencies",
-    "outward": "depends on",
-    "inward": "is dependency for",
     "exists_in_workspace": true
   },
   "duplicate": {
@@ -42,11 +35,11 @@
     "exists_in_workspace": true
   },
   "problem_incident": {
-    "id": "10013",
-    "name": "Problem/Incident",
+    "id": "",
+    "name": "",
     "outward": "causes",
     "inward": "is caused by",
-    "exists_in_workspace": true
+    "exists_in_workspace": false
   },
   "relates": {
     "id": "10003",
@@ -56,38 +49,38 @@
     "exists_in_workspace": true
   },
   "test": {
-    "id": "10006",
+    "id": "10038",
     "name": "Test",
     "outward": "tests",
     "inward": "is tested by",
     "exists_in_workspace": true
   },
   "test_automation": {
-    "id": "10011",
-    "name": "Test Automation",
+    "id": "",
+    "name": "",
     "outward": "automation test for",
     "inward": "is automated by",
-    "exists_in_workspace": true
+    "exists_in_workspace": false
   },
   "test_design": {
-    "id": "10010",
-    "name": "Test Design",
+    "id": "",
+    "name": "",
     "outward": "designs",
     "inward": "is designed by",
-    "exists_in_workspace": true
+    "exists_in_workspace": false
   },
   "test_execute": {
-    "id": "10009",
-    "name": "Test Execute",
+    "id": "",
+    "name": "",
     "outward": "executes",
     "inward": "is executed by",
-    "exists_in_workspace": true
+    "exists_in_workspace": false
   },
   "xray_defect": {
-    "id": "10012",
-    "name": "Xray Defect",
+    "id": "",
+    "name": "",
     "outward": "created",
     "inward": "created by",
-    "exists_in_workspace": true
+    "exists_in_workspace": false
   }
 }
