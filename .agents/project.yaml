@@ -78,7 +78,7 @@ git_strategy:
     hotfix_policy: n/a
   policy:
     direct_push_to_protected: confirm # Q4 — maintainer self-merges the trunk; main confirms
-    admin_bypass: false
+    admin_bypass: true
     require_pr_reviews: 0 # 0 on the trunk (self-merge); 1 on the final trunk -> main PR
   branch_prefixes:
     precedence: [feat, fix, refactor, test, docs, chore]
