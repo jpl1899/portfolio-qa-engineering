@@ -69,7 +69,7 @@ git_strategy:
   branches:
     production: main
     integration: null # the trunk is ephemeral, not a fixed long-lived branch
-    ephemeral_pattern: 'test/<module>-suite'
+    ephemeral_pattern: test/<module>-suite
   protected:
     - main
   decisions:
