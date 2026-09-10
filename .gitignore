@@ -34,3 +34,6 @@ build/
 # AI CLI (local only)
 .claude/settings.local.json
 .claude/worktrees/
+
+# Personal learning log — kept in the repo folder, never committed
+docs/bitacora.md
