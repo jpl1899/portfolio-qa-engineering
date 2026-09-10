@@ -14,10 +14,9 @@ node_modules/
 /allure-report/
 /.allure/
 
-# Environment
-.env
-.env.local
-.env.*.local
+# Environment — ignore every .env variant, keep only the committed template
+.env*
+!.env.example
 
 # Editor / OS
 .idea/
