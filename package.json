@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "test": "playwright test --pass-with-no-tests",
-    "test:api": "playwright test --project=api --pass-with-no-tests",
+    "test:api": "playwright test --project=api",
     "test:ui": "playwright test --project=ui --pass-with-no-tests",
     "test:db": "playwright test --project=db --pass-with-no-tests",
     "test:integration": "playwright test --project=integration --pass-with-no-tests",
