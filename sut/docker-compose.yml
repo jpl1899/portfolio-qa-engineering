@@ -1,0 +1,83 @@
+# Toolshop (testsmith-io/practice-software-testing), pinned to release 2.4.
+#
+# Built from the project's own docker-compose.prod.yml (prebuilt images), trimmed to
+# what the portfolio needs: API + Angular UI behind the web server, plus MySQL/MariaDB.
+# `cron` (order-status transitions, invoice generation) is dropped until a module
+# needs it.
+#
+# `web` is the exception: upstream's own image is published for linux/arm64 only,
+# which runs emulated everywhere and crashed outright on GitHub Actions' amd64
+# runners. Built natively instead from their public vhost.conf (see web.Dockerfile).
+#
+# Migrations are NOT automatic in the upstream images (confirmed against their own
+# CI, which runs `migrate:refresh --seed` by hand). `laravel-api` runs that on every
+# start instead, so `sut:up` is a single command and every run starts from the same
+# seeded state — `sut:down` already wipes the MySQL volume for the same reason.
+services:
+  mariadb:
+    image: yobasystems/alpine-mariadb:10.6.11
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: toolshop
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  laravel-api:
+    image: testsmith/practice-software-testing-sprint5-api:2.4
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      DB_HOST: mariadb
+      DB_PORT: "3306"
+      host: localhost
+    command: >
+      sh -c "php artisan migrate:fresh --seed --force && php-fpm"
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(@fsockopen('127.0.0.1', 9000) ? 0 : 1);"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    depends_on:
+      laravel-api:
+        condition: service_healthy
+    ports:
+      - "8091:80"
+    healthcheck:
+      # Laravel serves the API at the docroot, no `/api` prefix — verified
+      # against the live routes. `127.0.0.1` (not `localhost`): the nginx
+      # image only binds IPv4, and `localhost` resolves to `::1` first here.
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1/products"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  angular-ui:
+    image: testsmith/practice-software-testing-sprint5-ui:2.4
+    depends_on:
+      laravel-api:
+        condition: service_healthy
+    ports:
+      - "4200:4200"
+    command: >
+      bash -c "ng serve --host 0.0.0.0 --port 4200"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:4200"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+      start_period: 30s

@@ -24,7 +24,10 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bunx playwright install --with-deps chromium
+      - run: bun run sut:up
       - run: bun run test
+      - if: always()
+        run: bun run sut:down
       - if: always()
         uses: actions/upload-artifact@v4
         with:
