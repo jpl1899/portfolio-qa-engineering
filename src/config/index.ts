@@ -24,7 +24,7 @@ export function requireEnv(name: string): string {
 export const config = {
   sut: {
     webUrl: env('SUT_WEB_URL', 'http://localhost:8091'),
-    apiUrl: env('SUT_API_URL', 'http://localhost:8091/api'),
+    apiUrl: env('SUT_API_URL', 'http://localhost:8091'),
   },
   db: {
     host: env('DB_HOST', '127.0.0.1'),
