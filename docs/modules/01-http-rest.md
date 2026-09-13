@@ -10,7 +10,8 @@ Playwright → assertions) actually works.
   Trimmed from upstream's own `docker-compose.prod.yml` (prebuilt images
   instead of building from source): `mariadb`, `laravel-api`, `web` (nginx,
   proxies to the API), `angular-ui`. `cron` (order-status transitions,
-  invoice generation) is dropped until a module needs it.
+  invoice generation) is dropped until a module needs it. `web` is the one
+  exception — see below, it's built natively instead of pulled.
 - **`src/config`, `.env.example`, `.env`** — fixed `SUT_API_URL`. It was
   `http://localhost:8091/api`, carried over from Day 0 as a generic
   assumption. The live SUT proved that wrong: Laravel's
@@ -45,21 +46,29 @@ Playwright → assertions) actually works.
 - **Raw `request` fixture, no client class yet.** Module 01 is about HTTP
   basics with `APIRequestContext`; a `ProductsClient` wrapper would hide the
   thing being taught. Request builders land in module 08.
+- **`web` built natively from upstream's own `vhost.conf`, not pulled.**
+  `testsmith/practice-software-testing-web` is published for `linux/arm64`
+  only. Emulated (QEMU) it survived locally, but exited `255` outright on
+  GitHub Actions' amd64 runners — CI caught it, not local testing. Running a
+  20-line nginx reverse-proxy config emulated had no upside, so
+  `sut/web.Dockerfile` builds it natively from the same `vhost.conf`
+  upstream ships at `2.4` (`sut/vhost.conf`, unmodified).
 
 ## What I'd do differently
 
-- The Angular UI image only publishes `linux/arm64` — it runs emulated
-  (QEMU) on this amd64 host. Harmless for now (nginx logs a benign
-  `io_setup() failed` from an unsupported AIO syscall under emulation), but
-  worth knowing before module 09 leans on it for real UI runs — if it's
-  slow or flaky there, that's why.
 - Healthchecks use `127.0.0.1`, not `localhost`, on purpose: the `nginx`
   image binds IPv4 only, and `wget` inside the container resolved
   `localhost` to `::1` first, so the healthcheck failed with "connection
   refused" even though the service was up and reachable from the host.
+- Local-green isn't proof — the `web` emulation crash only showed up in CI,
+  never locally. Checked the other three images the same way (`docker image
+  inspect --format='{{.Architecture}}'`): `laravel-api` and `angular-ui` are
+  native `amd64`, only `web` was arm64-only. Worth re-checking on any future
+  version bump — nothing here says it has to stay that way.
 
 ## Verification
 
 - `bun run sut:up` — all four services healthy
 - `bun run test:api` — 1 passed
 - `bun run lint`, `bun run types:check` — clean
+- CI (`lint-types` + `test`, SUT started via Compose) — green on the PR

@@ -5,6 +5,10 @@
 # `cron` (order-status transitions, invoice generation) is dropped until a module
 # needs it.
 #
+# `web` is the exception: upstream's own image is published for linux/arm64 only,
+# which runs emulated everywhere and crashed outright on GitHub Actions' amd64
+# runners. Built natively instead from their public vhost.conf (see web.Dockerfile).
+#
 # Migrations are NOT automatic in the upstream images (confirmed against their own
 # CI, which runs `migrate:refresh --seed` by hand). `laravel-api` runs that on every
 # start instead, so `sut:up` is a single command and every run starts from the same
@@ -44,7 +48,9 @@ services:
       start_period: 15s
 
   web:
-    image: testsmith/practice-software-testing-web:latest
+    build:
+      context: .
+      dockerfile: web.Dockerfile
     depends_on:
       laravel-api:
         condition: service_healthy
